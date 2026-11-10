@@ -8,7 +8,7 @@ Self-updating nursing career platform: daily jobs, news and videos, US + Canada 
 
 ## How the daily automation works
 
-`.github/workflows/daily.yml` runs every day (~10:17 UTC), on every push to `main`, and on demand (Actions → *Daily refresh & build* → *Run workflow*):
+`.github/workflows/daily.yml` runs every day (~10:17 UTC), on every push to `main`, and on demand (Actions → *Daily refresh & deploy* → *Run workflow*). The workflow only calls `scripts/ci.sh`, which holds all pipeline logic:
 
 1. `scripts/update.mjs` pulls fresh **news** (Google News RSS), **jobs** (Jobicy + The Muse public APIs, plus Adzuna and USAJOBS if keys are set) and **videos** (YouTube channel RSS). Each source fails independently; yesterday’s data is kept if a source is down.
 2. `scripts/ai-draft.mjs` *(optional)* writes one AI draft per week to `content/drafts/` — **never auto-published**.
@@ -18,9 +18,9 @@ Self-updating nursing career platform: daily jobs, news and videos, US + Canada 
 ## One-time setup checklist
 
 1. **GitHub Pages (free — the repo is public):**
-   1. Settings → Pages → *Build and deployment* → **Source: GitHub Actions**.
-   2. Same page → **Custom domain:** `nursenow.com` → Save. (Set it before the first deploy: the site uses root paths, so it is meant to be served from the domain, not from the `github.io/nursenow.com/` sub-path.)
-   3. Actions → *Daily refresh & build* → **Run workflow** (or re-run the latest run).
+   1. Settings → Pages → *Build and deployment* → **Source: GitHub Actions** (not “Deploy from a branch” — that publishes this README instead of the site).
+   2. Same page → **Custom domain:** `nursenow.com` → Save. (The site uses root paths, so it is served from the domain, not from the `github.io/nursenow.com/` sub-path.)
+   3. Make sure `.github/workflows/daily.yml` exists; committing it starts the first run. Later runs: Actions → *Daily refresh & deploy* → **Run workflow**.
    4. DNS for nursenow.com (GoDaddy) — only these records for the apex and www:
       - `A @ 185.199.108.153`, `A @ 185.199.109.153`, `A @ 185.199.110.153`, `A @ 185.199.111.153`
       - optional IPv6: `AAAA @ 2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`
