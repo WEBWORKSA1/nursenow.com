@@ -1,5 +1,0 @@
-{
-  "name": "NurseNow",
-  "description": "AI-Powered Nursing Career, Jobs, and Skill Platform. Find nursing jobs, learn skills, and grow your career with AI-driven tools and creator strategy dashboards.",
-  "requestFramePermissions": ["camera", "microphone", "geolocation"]
-}
