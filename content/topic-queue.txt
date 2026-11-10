@@ -1,0 +1,17 @@
+# One topic per line. The optional weekly AI drafting agent takes the first line each Monday.
+# Drafts land in content/drafts/ and are NEVER published until a human reviews them.
+How to become an ICU nurse: experience, courses and the CCRN path
+REx-PN exam guide for practical nurses in Canada
+Nurse practitioner vs physician assistant: scope, education and pay
+How to negotiate a nursing job offer
+Charge nurse skills: leading a shift without burning out
+Long-term care nursing careers: roles, skills and growth
+Pediatric nursing: how to start and what to expect
+Labor and delivery nursing: a career guide
+Nursing informatics: how to move from bedside to tech
+Per diem nursing: pros, cons and pay
+How to study pharmacology for the NCLEX
+Delegation and prioritisation questions on the NCLEX
+Infection prevention nurse career guide
+How to become a nurse educator
+Nursing in rural and remote Canada

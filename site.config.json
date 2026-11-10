@@ -1,0 +1,91 @@
+{
+  "name": "NurseNow",
+  "domain": "nursenow.com",
+  "url": "https://nursenow.com",
+  "tagline": "Jobs, licensing, NCLEX prep and career tools for nurses",
+  "description": "NurseNow helps nurses find jobs, get licensed and certified, pass the NCLEX, and grow their careers with free tools, daily-updated news and practical guides.",
+  "locale": "en",
+  "themeColor": "#0B2E36",
+  "owner": "Webworks",
+  "foundedYear": 2026,
+  "brokerUrl": "https://web.works/contact",
+  "brokerText": "contact, if you are interested in this website/domain name/Sponsorship/Advertisement/Partnership",
+  "adsense": {
+    "client": "ca-pub-6620975821265271",
+    "publisherId": "pub-6620975821265271",
+    "slots": {
+      "inArticle": "",
+      "sidebar": "",
+      "footer": ""
+    },
+    "excludePaths": [
+      "/404.html"
+    ]
+  },
+  "payments": {
+    "donateOnce": "",
+    "donateMonthly": "",
+    "featuredJob": "",
+    "standardJob": "",
+    "recruiterPro": "",
+    "resumeBoost": "",
+    "note": "Paste Stripe Payment Links, PayPal.me, Ko-fi or Buy Me a Coffee URLs here. Empty values fall back to the pledge/invoice forms, so every button keeps working."
+  },
+  "affiliate": {
+    "amazonTag": "",
+    "note": "Set your Amazon Associates tracking ID (e.g. nursenow-20). It is appended to every Amazon link in the gear guide."
+  },
+  "social": {
+    "youtube": "",
+    "instagram": "",
+    "tiktok": "",
+    "facebook": "",
+    "linkedin": "",
+    "x": ""
+  },
+  "pricing": {
+    "standardJob": "$149",
+    "featuredJob": "$249",
+    "recruiterPro": "$299/mo",
+    "resumeBoost": "$19",
+    "academyFrom": "$19",
+    "academyTo": "$99"
+  },
+  "feeds": {
+    "newsQueries": [
+      "nurses|General",
+      "nursing shortage|Staffing",
+      "nurse staffing ratios|Staffing",
+      "NCLEX|NCLEX",
+      "nurse practitioner|Nurse practitioners",
+      "travel nurse|Travel nursing",
+      "nurses Canada|Canada",
+      "nurses union|Labour"
+    ],
+    "youtubeHandles": [
+      "RegisteredNurseRN",
+      "SimpleNursing",
+      "LevelUpRN",
+      "NCSBN",
+      "NurseInTheMaking",
+      "ArcherReview"
+    ],
+    "jobKeywords": [
+      "nurse",
+      "nursing",
+      "rn ",
+      "r.n.",
+      "lpn",
+      "lvn",
+      "rpn",
+      "nurse practitioner",
+      "crna",
+      "midwife",
+      "charge nurse",
+      "case manager rn"
+    ],
+    "maxNews": 72,
+    "maxJobs": 160,
+    "maxVideos": 36
+  }
+}
