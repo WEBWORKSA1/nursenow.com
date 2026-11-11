@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /404.html
+Disallow: /docs/
+
+User-agent: Mediapartners-Google
+Allow: /
+
+Sitemap: https://nursenow.com/sitemap.xml
