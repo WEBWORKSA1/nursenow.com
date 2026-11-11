@@ -13,7 +13,8 @@ export function jobRow(j, featured) {
   return `<div class="job${featured ? ' featured' : ''}" data-item data-type="${esc((j.type || '').toLowerCase())}" data-region="${esc((j.country || '').toLowerCase())}${j.remote ? ' remote' : ''}"><div class="co" aria-hidden="true">${initials(j.company)}</div><div><h3>${featured ? '<span class="badge sun">Featured</span> ' : ''}${esc(j.title)}</h3><div class="meta">${meta}${j.date ? `<span><time datetime="${j.date}" data-rel>${fmtDate(j.date)}</time></span>` : ''}</div></div><a class="btn btn-teal btn-sm" href="${esc(j.url)}" target="_blank" rel="noopener nofollow sponsored">Apply ↗</a></div>`;
 }
 export const newsRow = n => `<div class="news-item" data-item data-cat="${esc(n.topic || 'general')}"><time datetime="${n.date}">${fmtDate(n.date, { month: 'short', day: 'numeric' })}</time><div><a href="${esc(n.url)}" target="_blank" rel="noopener nofollow">${esc(n.title)}</a><div class="src">${esc(n.source || '')}${n.topic ? ` · ${esc(n.topic)}` : ''}</div></div></div>`;
-export const videoCard = v => `<div class="vcard" data-item data-cat="${esc(v.channel || '')}"><div class="video" data-yt="${esc(v.id)}" data-title="${esc(v.title)}"></div><h3>${esc(v.title)}</h3><span class="muted" style="font-size:.85rem">${esc(v.channel || 'YouTube')}${v.date ? ' · ' + fmtDate(v.date) : ''}</span></div>`;
+export const cleanTitle = t => String(t || '').replace(/(^|\s)#[\p{L}\p{N}_]+/gu, ' ').replace(/\s{2,}/g, ' ').replace(/[\s|•·–-]+$/, '').trim();
+export const videoCard = v => `<div class="vcard" data-item data-cat="${esc(v.channel || '')}"><div class="video" data-yt="${esc(v.id)}" data-title="${esc(cleanTitle(v.title))}"></div><h3>${esc(cleanTitle(v.title))}</h3><span class="muted" style="font-size:.85rem">${esc(v.channel || 'YouTube')}${v.date ? ' · ' + fmtDate(v.date) : ''}</span></div>`;
 
 
 export function toolsList() {

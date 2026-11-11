@@ -110,8 +110,36 @@ async function usajobs() {
   } catch (e) { log('usajobs failed:', e.message); return []; }
 }
 
+// Job Bank (Government of Canada) public Atom feeds — no key required.
+async function jobbank() {
+  const res = [];
+  const field = (s, k) => { const m = s.match(new RegExp(k + ':\\s*(.*?)\\s*(?=(?:Job number|Location|Employer|Salary|Hours|Status|Telework|Remote work)\\s*:|$)', 'i')); return m ? m[1].trim() : ''; };
+  const cad = s => {
+    const n = [...String(s).matchAll(/([\d,]+(?:\.\d+)?)/g)].map(m => +m[1].replace(/,/g, '')).filter(Boolean);
+    if (!n.length) return '';
+    const per = /hour/i.test(s) ? '/hr' : /year|annual/i.test(s) ? '/yr' : /week/i.test(s) ? '/wk' : '';
+    const f = x => (x % 1 ? x.toFixed(2) : x.toLocaleString('en-US'));
+    return `CA$${f(n[0])}${n[1] && n[1] !== n[0] ? '–' + f(n[1]) : ''}${per}`;
+  };
+  for (const q of ['registered nurse', 'registered practical nurse', 'licensed practical nurse', 'nurse practitioner']) {
+    try {
+      const xml = await get(`https://www.jobbank.gc.ca/jobsearch/feed/jobSearchRSSfeed?searchstring=${encodeURIComponent(q)}&sort=D`);
+      for (const e of blocks(xml, 'entry')) {
+        const title = tag(e, 'title');
+        if (!isNursing(title)) continue;
+        const url = attr(e, 'link', 'href');
+        const sum = decode(tag(e, 'summary')); // summary is HTML inside XML: decode twice
+        const loc = field(sum, 'Location').replace(/\s*\(([A-Z]{2})\)\s*$/, ', $1');
+        res.push({ id: 'jobbank-' + (url.match(/(\d+)\s*$/) || [, title])[1], title: title.charAt(0).toUpperCase() + title.slice(1), company: field(sum, 'Employer'), location: loc || 'Canada', type: '', remote: /remote|telework/i.test(sum), country: 'ca', url, source: 'Job Bank', date: new Date(tag(e, 'updated')).toISOString(), salary: cad(field(sum, 'Salary')) });
+      }
+      log(`jobbank "${q}" ok`);
+    } catch (e) { log(`jobbank "${q}" failed:`, e.message); }
+  }
+  return res;
+}
+
 async function jobs() {
-  const all = (await Promise.all([jobicy(), muse(), adzuna(), usajobs()])).flat().filter(j => j.url && j.title && daysAgo(j.date) <= 30);
+  const all = (await Promise.all([jobicy(), muse(), jobbank(), adzuna(), usajobs()])).flat().filter(j => j.url && j.title && daysAgo(j.date) <= 30);
   return dedupe(all.sort((a, b) => b.date.localeCompare(a.date)), j => norm(j.title + ' ' + j.company + ' ' + j.location)).slice(0, F.maxJobs);
 }
 
