@@ -56,10 +56,22 @@ export const ctas = {
   tools: () => `<aside class="cta-box"><strong class="eyebrow" style="color:var(--sun)">Free tools</strong><h3>Pay calculator, resume builder, shift planner</h3><p>Built for nurses. Works on your phone. Nothing to install.</p><a class="btn btn-primary" href="/tools/">Open tools →</a></aside>`
 };
 
+// Search-result titles: keep within ~65 characters (Google truncates longer ones).
+export function seoTitle(t, brand, max = 65) {
+  const withBrand = s => `${s} | ${brand}`;
+  if (withBrand(t).length <= max) return withBrand(t);
+  if (t.length <= max) return t;
+  const short = [t.split(/:\s| — /)[0], t.replace(/\s*\([^)]*\)\s*$/, '')].filter(s => s.length >= 12 && s.length < t.length);
+  for (const s of short) if (withBrand(s).length <= max) return withBrand(s);
+  for (const s of short) if (s.length <= max) return s;
+  return short.sort((a, b) => a.length - b.length)[0] || t;
+}
+const clip = (s, n) => { s = String(s || ''); if (s.length <= n) return s; const c = s.slice(0, n - 1); return c.slice(0, c.lastIndexOf(' ')).replace(/[\s,;:—–-]+$/, '') + '…'; };
+
 export function shell(cfg, page, { buildDate }) {
   const url = cfg.url + page.path.replace(/index\.html$/, '');
-  const title = page.path === '/index.html' ? `${cfg.name} — Nursing Jobs, NCLEX Prep, Licensing & Career Tools` : `${page.title} | ${cfg.name}`;
-  const desc = esc(page.description || cfg.description);
+  const title = page.path === '/index.html' ? `${cfg.name} — Nursing Jobs, NCLEX Prep, Licensing & Career Tools` : seoTitle(page.title, cfg.name);
+  const desc = esc(clip(page.description || cfg.description, 160));
   const noAds = cfg.adsense.excludePaths.includes(page.path) || page.noAds;
   const ld = [{ '@context': 'https://schema.org', '@type': 'Organization', name: cfg.name, url: cfg.url, logo: cfg.url + '/assets/img/logo-512.png' },
     { '@context': 'https://schema.org', '@type': 'WebSite', name: cfg.name, url: cfg.url, potentialAction: { '@type': 'SearchAction', target: cfg.url + '/resources/?q={search_term_string}', 'query-input': 'required name=search_term_string' } }];
@@ -136,7 +148,7 @@ function footer(cfg, buildDate) {
 </div>
 <div class="legal">
 <div><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/disclaimer/">Medical disclaimer</a> · <a href="/cookies/">Cookies</a> · <a href="/affiliate-disclosure/">Affiliate disclosure</a> · <a href="/trademark/">Trademark & copyright</a> · <a href="/sitemap.xml">Sitemap</a></div>
-<div>© ${cfg.foundedYear}–<span class="year">${new Date(buildDate).getUTCFullYear()}</span> ${cfg.name}™ — a ${cfg.owner} property. All rights reserved. NurseNow™, the NurseNow logo and site content are trademarks and copyrighted works of their owner and may not be reproduced without permission. NCLEX®, NCLEX-RN® and NCLEX-PN® are registered trademarks of the National Council of State Boards of Nursing, Inc. (NCSBN); other names and marks belong to their respective owners and are used for identification only, without endorsement. NurseNow provides general educational information, not medical, legal or financial advice — always follow your regulator, employer policy and clinical judgment.</div>
+<div>© ${cfg.foundedYear < new Date(buildDate).getUTCFullYear() ? cfg.foundedYear + '–' : ''}<span class="year">${new Date(buildDate).getUTCFullYear()}</span> ${cfg.name}™ — a ${cfg.owner} property. All rights reserved. NurseNow™, the NurseNow logo and site content are trademarks and copyrighted works of their owner and may not be reproduced without permission. NCLEX®, NCLEX-RN® and NCLEX-PN® are registered trademarks of the National Council of State Boards of Nursing, Inc. (NCSBN); other names and marks belong to their respective owners and are used for identification only, without endorsement. NurseNow provides general educational information, not medical, legal or financial advice — always follow your regulator, employer policy and clinical judgment.</div>
 </div></div></footer>`;
 }
 
